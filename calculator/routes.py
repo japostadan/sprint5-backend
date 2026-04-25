@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 
 from .service import CalculatorService
 from .storage import FileStorage
@@ -7,7 +7,8 @@ bp = Blueprint("calculator", __name__)
 
 
 def get_service() -> CalculatorService:
-    return CalculatorService(FileStorage("history.json"))
+    filepath = current_app.config.get("HISTORY_FILE", "history.json")
+    return CalculatorService(FileStorage(filepath))
 
 
 @bp.post("/calculate")
