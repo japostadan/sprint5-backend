@@ -1,8 +1,11 @@
 from flask import Flask
+from calculator.routes import bp
 
-app = Flask(__name__)
+
+def create_app() -> Flask:
+    app = Flask(__name__)
+    app.register_blueprint(bp)
+    return app
 
 
-@app.route("/")
-def home():
-    return {"message": "Calculator API is running"}
+app = create_app()
